@@ -44,6 +44,7 @@ t=0:0.01*10^-3:(100-0.01)*10^-3;                                           %Crea
 t1 = 0:1/Fs:(100-0.01)*10^-3;                                              %Creating the time 
 x=10*cos(2*pi*1e3*t)+6*cos(2*pi*2*1e3*t)+2*cos(2*pi*4*1e3*t);              % Original Function
 x1=10*cos(2*pi*1e3*t1)+6*cos(2*pi*2*1e3*t1)+2*cos(2*pi*4*1e3*t1);          % Sampled function
+figure;
 plot(t,x);                                                                 %Plotting the original function
 hold on;
 stem(t1,x1);                                                               %Plotting the sampled function
