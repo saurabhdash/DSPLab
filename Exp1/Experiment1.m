@@ -104,6 +104,8 @@ hold off
 
 
 %% downsampling
+y1=(fft(x1,1200)/1200);
+
 A = fir1(49,0.5,'low');
 [a,~]=freqz(A,1,600);
 a=[a' a' 0];
