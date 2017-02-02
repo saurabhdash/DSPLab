@@ -72,7 +72,7 @@ DFT(10000,4);
 DFT(64,4);
 DFT(128,4);
 DFT(256,4);
-
+hold off
 
 
 %% upsampling
