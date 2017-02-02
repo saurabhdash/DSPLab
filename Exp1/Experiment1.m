@@ -33,7 +33,7 @@ for freq = freqarr
     error = x-recx;
     err(freq/2) = sqrt(error*error');
 end
-plot(freqarr*1e3, err);
+semilogy(freqarr*1e3, err);
 xlabel('Frequency');
 ylabel('Error');
 title('Error vs Frequency');
