@@ -115,3 +115,6 @@ xfilt=filter(A,1,x1);
 xd=xfilt(1:2:1199);
 td=0:2/Fs:(100-0.05)*10^-3;
 yd = fftshift(fft(xd,600)/600);
+%%
+audio;
+%%
