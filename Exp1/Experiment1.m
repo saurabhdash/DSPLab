@@ -15,28 +15,151 @@ ylim([-2, 2]);                                                             %Y Ax
 %% DFT of Square Wave
 [dt,y] = DFTsqr(256,20,'plot');                                            % DFT of the square Wave, 20kHz, 256 Samples
 %% Reconstruction of the Signal from the DFT
-figure;                                                                    %New Figure
-recx = ifft(y);                                                            %Inverse DFT function 
-t = (0:size(recx,2)-1)*dt;                                                 %Time Array
-x = square(2*pi*1e3*t);                                                    %Generating Square Wave for Comparison
-plot(t,recx);                                                              %Plotting the Reconstructed Signal
-error = x-recx;                                                            
-error = sqrt(error*error');                                                %RMS Error
-%% Error Plotting for Different Sampling Rates
-freqarr = 2:2:600;
-err = zeros(size(freqarr,1),1);
-for freq = freqarr
-    [dt,y] = DFTsqr(256,freq,'noplot');    
-    recx = ifft(y); 
-    t = (0:size(recx,2)-1)*dt;
-    x = square(2*pi*1e3*t);
-    error = x-recx;
-    err(freq/2) = sqrt(error*error');
+Fs1 = 20e3;
+L = 1024;
+T = 1/Fs1;                                                                  %Sampling period
+t = (0:L-1)*T;                                                             % Time vector
+x1 = square(2*pi*1e3*t);  
+L = length(x1);
+f = Fs1 *(0:L-1)/L;
+f = f-Fs1/2;
+
+Fc = 3e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
 end
-semilogy(freqarr*1e3, err);
-xlabel('Frequency');
-ylabel('Error');
-title('Error vs Frequency');
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+
+Fc = 5e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+
+Fc = 7e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+
+Fc = 9e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+
+Fc = 11e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+
+Fc = 13e3;
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+figure;
+plot(t(1:100),y_filt(1:100));
+xlabel('t');
+ylabel('Signal'); 
+title(['Reconstruction for Fc = ' num2str(Fc/1e3)  'kHz']); %Title
+%% Error Plotting for Different Sampling Rates
+Fs1 = 200e3;
+L = 1024;
+T = 1/Fs1;                                                                  %Sampling period
+t = (0:L-1)*T;                                                             % Time vector
+x1 = square(2*pi*1e3*t);  
+
+L = length(x1);
+f = Fs1 *(0:L-1)/L;
+f = f-Fs1/2;
+err = zeros(100,1);
+
+for Fc = 1e3:1e3:100e3
+    
+filt = zeros(L,1);
+for i = 1:L
+if(f(i)> -Fc && f(i)< Fc)
+    filt(i) = 1;
+end
+end
+
+Y_filt = fftshift(fft(x1)) .* filt';
+y_filt = ifft(ifftshift(Y_filt));
+
+error = y_filt-x1;
+error = sqrt(error*error');
+err(Fc/1e3) = error;
+end
+figure;
+plot(1e3:1e3:100e3,err);
+xlabel('frequency');
+ylabel('error'); 
+title('Reconstruction error');
+% freqarr = 2:2:600;
+% err = zeros(size(freqarr,1),1);
+% for freq = freqarr
+%     [dt,y] = DFTsqr(256,freq,'noplot');    
+%     recx = ifft(y); 
+%     t = (0:size(recx,2)-1)*dt;
+%     x = square(2*pi*1e3*t);
+%     error = x-recx;
+%     err(freq/2) = sqrt(error*error');
+% end
+% semilogy(freqarr*1e3, err);
+% xlabel('Frequency');
+% ylabel('Error');
+% title('Error vs Frequency');
 
 %% Sampling and effect of Nyquist Criteria
 Fs = 12e3;                                                                 %Setting the Sampling Rate
@@ -44,6 +167,7 @@ t=0:0.01*10^-3:(100-0.01)*10^-3;                                           %Crea
 t1 = 0:1/Fs:(100-0.01)*10^-3;                                              %Creating the time 
 x=10*cos(2*pi*1e3*t)+6*cos(2*pi*2*1e3*t)+2*cos(2*pi*4*1e3*t);              % Original Function
 x1=10*cos(2*pi*1e3*t1)+6*cos(2*pi*2*1e3*t1)+2*cos(2*pi*4*1e3*t1);          % Sampled function at 12kHz
+figure;
 plot(t,x);                                                                 %Plotting the original function
 hold on;
 stem(t1,x1);                                                               %Plotting the sampled function
