@@ -22,7 +22,7 @@ title(['Trianguar Window (N=' num2str(N) ')']);
 w = hannWindow(N);
 B3 = hd .* w;
 figure;
-freqz(B3,1,-pi:0.05:pi);
+freqz(B3,1,-pi:0.005:pi);
 title(['Hanning Window (N=' num2str(N) ')']);
 %%
 w = hammWindow(N);
@@ -81,6 +81,15 @@ plotdft(y1,Fs,'Hamming Window output FFT')
 y1 = filtfilt(B5,1,x1);
 plotdft(y1,Fs,'Blackman Window output FFT')
 %% BandPass Response
-%hd = LPFilt(wc,N);
-%w1 = pi/2;
-%h1 = cos(w1*t)
+% hd = LPFilt(wc,N);
+% Fc = Fs;
+wc = 0.1*pi;
+Fc = 0.4;
+h1 = 2*BPFilt(wc,N,2*Fc)+LPFilt(wc,N);
+plotdft(h1,Fs,'BP')
+%%
+w = rectWindow(N);
+B1 = h1 .* w;
+figure;
+freqz(B1,1,-0.9*pi:0.005:pi);
+title(['Rectanguar Window (N=' num2str(N) ')']);
