@@ -22,7 +22,7 @@ title(['Trianguar Window (N=' num2str(N) ')']);
 w = hannWindow(N);
 B3 = hd .* w;
 figure;
-freqz(B3,1,-pi:0.05:pi);
+freqz(B3,1,-pi:0.005:pi);
 title(['Hanning Window (N=' num2str(N) ')']);
 %%
 w = hammWindow(N);
