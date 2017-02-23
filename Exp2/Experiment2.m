@@ -36,14 +36,47 @@ B5 = hd .* w;
 figure;
 freqz(B5,1,-pi:0.005:pi);
 title(['Blackman Window (N=' num2str(N) ')']);
-%%
+%% Generating Input Signal
 Fs = 10 * 1e3;            % Sampling frequency
 T = 1/Fs;             % Sampling period
-L = 500;             % Length of signal
+L = 2000;             % Length of signal
 t = (0:L-1)*T;        % Time vector
 x = sin(2*pi*0.1*Fs*t)+sin(2*pi*0.8*Fs*t);
 %plot(t,x);
 plotdft(x,Fs,'input FFT')
+%% Filtering using FIR Fiters
+y = filtfilt(B1,1,x);
+plotdft(y,Fs,'Rectanguar Window output FFT')
+
+y = filtfilt(B2,1,x);
+plotdft(y,Fs,'Trianguar Window output FFT')
+
+y = filtfilt(B3,1,x);
+plotdft(y,Fs,'Hanning Window output FFT')
+
+y = filtfilt(B4,1,x);
+plotdft(y,Fs,'Hamming Window output FFT')
+
+y = filtfilt(B5,1,x);
+plotdft(y,Fs,'Blackman Window output FFT')
+%% Generation of noise
+n = 5*randn(1,L);
+plotdft(n,Fs,'noise')
 %%
-y = filtfilt(B,1,x);
-plotdft(y,Fs,'output FFT')
+x1 = x+n;
+plotdft(x1,Fs,'Corrupted Signal')
+%% Filtering using FIR Fiters
+y1 = filtfilt(B1,1,x1);
+plotdft(y1,Fs,'Rectanguar Window output FFT')
+
+y1 = filtfilt(B2,1,x1);
+plotdft(y1,Fs,'Trianguar Window output FFT')
+
+y1 = filtfilt(B3,1,x1);
+plotdft(y1,Fs,'Hanning Window output FFT')
+
+y1 = filtfilt(B4,1,x1);
+plotdft(y1,Fs,'Hamming Window output FFT')
+
+y1 = filtfilt(B5,1,x1);
+plotdft(y1,Fs,'Blackman Window output FFT')

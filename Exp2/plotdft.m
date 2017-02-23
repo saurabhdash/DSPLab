@@ -7,7 +7,7 @@ f = f/(Fs1/2);
 Y = abs(fftshift(Y));
 figure;
 plot(f,Y);
-xlabel('Frequency x pi Radians');
+xlabel('Frequency x \pi Radians');
 ylabel('|X(f)|/N'); 
 title(str);
 end
