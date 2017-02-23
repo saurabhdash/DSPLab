@@ -1,7 +1,7 @@
 clear;
 clc;
 %%
-N = 513;
+N = 65;
 wc = 0.3*pi;
 %%
 hd = LPFilt(wc,N);
@@ -81,15 +81,11 @@ plotdft(y1,Fs,'Hamming Window output FFT')
 y1 = filtfilt(B5,1,x1);
 plotdft(y1,Fs,'Blackman Window output FFT')
 %% BandPass Response
-% hd = LPFilt(wc,N);
-% Fc = Fs;
-wc = 0.1*pi;
-Fc = 0.4;
-h1 = 2*BPFilt(wc,N,2*Fc)+LPFilt(wc,N);
-plotdft(h1,Fs,'BP')
-%%
+wc = 0.05*pi;
+Fc = 0.4;N=65;
+h1 = 2*BPFilt(wc,N,0.5*Fc)+LPFilt(wc,N);
+%plotdft(h1,Fs,'BP')
 w = rectWindow(N);
 B1 = h1 .* w;
-figure;
 freqz(B1,1,-0.9*pi:0.005:pi);
 title(['Rectanguar Window (N=' num2str(N) ')']);
