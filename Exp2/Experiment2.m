@@ -85,12 +85,12 @@ wc = 0.05*pi;                           %cutoff of band on either side
 Fc = 0.4;                               %center frequency of pass band
 N=65;
 h1 = 2*BPFilt(wc,N,0.5*Fc)+LPFilt(wc,N); %compensate for division of power in sidebands
-w = hannWindow(N);
+w = rectWindow(N);
 B1 = h1 .* w;
 [A,~]=freqz(B1,1,-0.9*pi:0.005:pi);
-subplot(2,2,4)
+%subplot(2,2,1)
 plot(-0.9:1.9/size(A,2):1-1.9/size(A,2),20*log10(abs(A)));
 xlim([-0.9 1]);
 xlabel('Normalized Frequency  (\times\pi rad/sample)');
 ylabel('Magnitude (dB)');
-title(['Hanning Window (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
+title(['Rectangular Window (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
