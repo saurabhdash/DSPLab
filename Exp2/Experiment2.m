@@ -80,9 +80,9 @@ plotdft(y1,Fs,'Hamming Window output FFT')
 
 y1 = filtfilt(B5,1,x1);
 plotdft(y1,Fs,'Blackman Window output FFT')
-%% BandPass Response
+%% Limitation of Windowing Method
 wc = 0.05*pi;                           %cutoff of band on either side
-Fc = 0.4;                               %center frequency of pass band
+Fc = 0.13;                               %center frequency of pass band
 N=65;
 h1 = 2*BPFilt(wc,N,0.5*Fc)+LPFilt(wc,N); %compensate for division of power in sidebands
 w = rectWindow(N);
@@ -94,3 +94,34 @@ xlim([-0.9 1]);
 xlabel('Normalized Frequency  (\times\pi rad/sample)');
 ylabel('Magnitude (dB)');
 title(['Rectangular Window (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
+
+%% Parks-McLellan algorithm
+h2=2*BPFilt(wc,1001,0.5*Fc)+LPFilt(wc,1001);
+[a,~]=freqz(h2,1,-0.9*pi:0.005:pi);
+a(1:566)=[];
+f=0:1/size(a,2):1-1/size(a,2);
+b=firpm(N,f,abs(a));
+
+subplot(3,1,1)
+[A,~]=freqz(b,1,-0.9*pi:0.005:pi);
+plot(-0.9:1.9/size(A,2):1-1.9/size(A,2),20*log10(abs(A)));
+xlim([-0.9 1]);
+xlabel('Normalized Frequency  (\times\pi rad/sample)');
+ylabel('Magnitude (dB)');
+title(['Parks-McLellan (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
+
+subplot(3,1,2)
+[A,~]=freqz(B1,1,-0.9*pi:0.005:pi);
+plot(-0.9:1.9/size(A,2):1-1.9/size(A,2),20*log10(abs(A)));
+xlim([-0.9 1]);
+xlabel('Normalized Frequency  (\times\pi rad/sample)');
+ylabel('Magnitude (dB)');
+title(['Rectangular Window (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
+
+subplot(3,1,3)
+[A,~]=freqz(h2,1,-0.9*pi:0.005:pi);
+plot(-0.9:1.9/size(A,2):1-1.9/size(A,2),20*log10(abs(A)));
+xlim([-0.9 1]);
+xlabel('Normalized Frequency  (\times\pi rad/sample)');
+ylabel('Magnitude (dB)');
+title('Original IIR Filter');
