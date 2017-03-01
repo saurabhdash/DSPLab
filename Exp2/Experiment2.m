@@ -81,11 +81,16 @@ plotdft(y1,Fs,'Hamming Window output FFT')
 y1 = filtfilt(B5,1,x1);
 plotdft(y1,Fs,'Blackman Window output FFT')
 %% BandPass Response
-wc = 0.05*pi;
-Fc = 0.4;N=65;
-h1 = 2*BPFilt(wc,N,0.5*Fc)+LPFilt(wc,N);
-%plotdft(h1,Fs,'BP')
-w = rectWindow(N);
+wc = 0.05*pi;                           %cutoff of band on either side
+Fc = 0.4;                               %center frequency of pass band
+N=65;
+h1 = 2*BPFilt(wc,N,0.5*Fc)+LPFilt(wc,N); %compensate for division of power in sidebands
+w = hannWindow(N);
 B1 = h1 .* w;
-freqz(B1,1,-0.9*pi:0.005:pi);
-title(['Rectanguar Window (N=' num2str(N) ')']);
+[A,~]=freqz(B1,1,-0.9*pi:0.005:pi);
+subplot(2,2,4)
+plot(-0.9:1.9/size(A,2):1-1.9/size(A,2),20*log10(abs(A)));
+xlim([-0.9 1]);
+xlabel('Normalized Frequency  (\times\pi rad/sample)');
+ylabel('Magnitude (dB)');
+title(['Hanning Window (N=' num2str(N) ', F_c=' num2str(Fc) '\pi)']);
