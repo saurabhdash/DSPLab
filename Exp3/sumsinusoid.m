@@ -1,6 +1,6 @@
-function signal=sumsinusoid(sequence,i,S,fr,fc)
-T=1;
-t=0:T/10000:9999*T/10000;
+function signal=sumsinusoid(sequence,i,S,fr,fc,Fs)
+T=40e-3;
+t=0:1/Fs:(Fs-1)*T/Fs;
 
 index=find(S==sequence(i));
 temp=mod(index,4);
