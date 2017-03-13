@@ -1,5 +1,5 @@
-clear;
-clc;
+%clear;
+%clc;
 %% Definitions
 f = [697 770 852  941 1209 1336 1447 1633];
 S='123A456B789C*0#D';
@@ -14,11 +14,14 @@ y=zeros(1,8);
 keys=zeros(1,len);
 power=zeros(1,8);
 
+%SNR=20;                              %quantifies the input noise
+
 %% DTMF Generator and Decoder
 for i=1:len
     y(:)=0;
     signal=sumsinusoid(sequence,i,S,f,Fs);  %signal corresponding to input key
-   
+    signal=signal+peak2peak(signal)/10^(SNR/20)*(-0.5+rand(1,Nt)); %addition of AWGN
+    
     for j=1:8
         A=fir1(95,[2*f(j)/Fs-20/Fs 2*f(j)/Fs+2*20/Fs]);
         out=filter(A,1,signal);
