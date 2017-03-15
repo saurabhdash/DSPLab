@@ -15,7 +15,7 @@ keys=zeros(1,len);
 power=zeros(1,8);
 
 %SNR=20;                              %quantifies the input noise
-
+                                      %uncomment if run standalone
 %% DTMF Generator and Decoder
 for i=1:len
     y(:)=0;
