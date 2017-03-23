@@ -14,7 +14,11 @@ Upper passband edge: 0.3pi          Upper stopband edge: 0.31pi
 %% 1.a FIR-Rectangular window
 N=512;
 h1 = fir1(N, [0.199 0.301], 'bandpass', rectwin(N+1));
-freqz(h1, 1, 10000);
+%freqz(h1, 1, 10000);
+%figure;
+h1_10 = bitprecision(10,1,N+1,h1);     %used for finite word length
+%freqz(h1_dash,1,10000);
+fvtool(h1,1,h1_10,1);
 %% 1.b.FIR-Hanning window
 N=400;
 h1 = fir1(N, [0.198 0.302], 'bandpass', hann(N+1));
