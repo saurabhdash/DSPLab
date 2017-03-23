@@ -11,9 +11,21 @@ Upper passband edge: 0.3pi          Upper stopband edge: 0.31pi
 6. IIR Inverse Chebyshev
 7. IIR Elliptic
 %}
+%% 1.b.FIR-Hannwindow
+%{
+N=400;
+h1 = fir1(N, [0.198 0.302], 'bandpass', hann(N+1));
+freqz(h1,1,10000);
+%}
 %% 2.FIR-LS
 %{
-h1=fir1(120,[0.2 0.3],'bandpass',chebwin(121,15));
+h1 = firls(155,[0 0.19 0.203 0.297 0.31 1],[0 0 1 1 0 0]);
+freqz(h1,1,10000);
+%}
+%% 3.FIR-Parks-McClellan
+%{
+N=175;
+h1=firpm(N,[0 0.19 0.205 0.295 0.31 1],[0 0 1 1 0 0]);
 freqz(h1,1,10000);
 %}
 %% 4.Butterworth IIR
