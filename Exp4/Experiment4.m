@@ -45,13 +45,13 @@ fvtool(sos);
 xlim([0.18 0.32]);
 ylim([-45 5]);
 %% 6.Inverse Chebyshev IIR
-[z,p,k] = cheby2(7,30,[0.19 0.31],'bandpass');
+[z,p,k] = cheby2(18,30,[0.19 0.31],'bandpass');
 sos = zp2sos(z,p,k);
 fvtool(sos);
 xlim([0.18 0.32]);
 ylim([-45 5]);
 %% 7.Elliptic IIR
-[z,p,k] = ellip(5,1,30,[0.2 0.3],'bandpass');
+[z,p,k] = ellip(10,1,30,[0.2 0.3],'bandpass');
 sos = zp2sos(z,p,k);
 fvtool(sos);
 xlim([0.18 0.32]);
