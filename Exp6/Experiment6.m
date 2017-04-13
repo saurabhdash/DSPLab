@@ -23,7 +23,7 @@ s1 = x - v;         %subtract signals at primary and secondary signals
 %figure;
 %plot(s1);
 %% Wiener filtering of secondary signal
-p = 15;
+p = 16;
 r_xv = crosscorr(x, v, p-1);
 r_xv = r_xv(p:2*p-1)';
 r_v = crosscorr(v, v, p-1);
@@ -36,4 +36,4 @@ v_n = fliplr(v);
 for i=1:N-p+1
     s2(N-i+1) = x(N-i+1)-v_n(i:i+p-1)*wien;
 end
-plot(s2);
+%plot(s2);
