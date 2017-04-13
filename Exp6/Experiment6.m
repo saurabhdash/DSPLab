@@ -1,8 +1,8 @@
 clear;
 clc;
 %%
-L = 500;
-n = 0:L-1;
+N = 500;
+n = 0:N-1;
 w0 = 0.05*pi;
 s = sin(w0*n + -pi+ 2*pi*rand);
 %plot(s);
@@ -23,14 +23,17 @@ s1 = x - v;         %subtract signals at primary and secondary signals
 %figure;
 %plot(s1);
 %% Wiener filtering of secondary signal
-p = 4;
-r_xv = xcorr(x,v)';
-r_xv = r_xv(1:p);
-r_v = xcorr(v);
-r_v = r_v(1:p);
+p = 15;
+r_xv = crosscorr(x, v, p-1);
+r_xv = r_xv(p:2*p-1)';
+r_v = crosscorr(v, v, p-1);
+r_v(1:ceil(length(r_v)/2) - 1)=[];
 R_v = toeplitz(r_v,conj(r_v));
 wien = R_v\r_xv;
-w_est = wien*v;
-w_est = sum(w_est,1);
-s2 = x - w_est;
+
+s2=zeros(1,N);
+v_n = fliplr(v);
+for i=1:N-p+1
+    s2(N-i+1) = x(N-i+1)-v_n(i:i+p-1)*wien;
+end
 plot(s2);
