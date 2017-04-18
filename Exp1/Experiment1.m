@@ -164,7 +164,7 @@ title('Reconstruction error');
 %% Sampling and effect of Nyquist Criteria
 Fs = 12e3;                                                                 %Setting the Sampling Rate
 t=0:0.01*10^-3:(100-0.01)*10^-3;                                           %Creating the time array for original signal
-t1 = 0:1/Fs:(100-0.01)*10^-3;                                              %Creating the time 
+t1 = 0:1/Fs:100*10^-3-1/Fs;                                              %Creating the time 
 x=10*cos(2*pi*1e3*t)+6*cos(2*pi*2*1e3*t)+2*cos(2*pi*4*1e3*t);              % Original Function
 x1=10*cos(2*pi*1e3*t1)+6*cos(2*pi*2*1e3*t1)+2*cos(2*pi*4*1e3*t1);          % Sampled function at 12kHz
 figure;
